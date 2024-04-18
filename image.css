@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #131521;
+  overflow: hidden !important;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.img-dow {
+  width: 90%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover; 
+}
+
+.back {
+  width: 80%;
+  color: white;
+}
+
+
+.btns {
+  width: 80%;
+  max-width: 300px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  color: white;
+  gap: 10px;
+}
+
+.btn1{
+  width: 250px;
+  height: 40px;
+  background-color: #4CAF50;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.btn2{
+  width: 60px;
+  height: 40px;
+  background-color: #4CAF50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.down-title{
+  font-size: 0.9rem;
+}
+/* Media query for screens between 350px and 400px */
+@media (min-width: 350px) and (max-width: 380px) {
+    .img-dow {
+      width: 80%;
+    }
+  }
+  
+  /* Media query for screens between 376px and 450px */
+  @media (min-width: 380px) and (max-width: 450px) {
+    .img-dow {
+      width: 90%;
+    }
+  }
+  
+  /* Media query for screens 550px and above */
+  @media (min-width: 550px) {
+    .img-dow {
+      width: 55%;
+    }
+  }
+  
+  /* Add this CSS to your existing CSS file */
+.message-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff; /* White color */
+  background-color: transparent; /* Transparent background */
+}
+
+.header{
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 30px 0px 0px 0px;
+}
+.profile{
+  width: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  color: #fff;
+  gap: 10px;
+}
+.name{
+  font-size: 0.9rem;
+}
+.profile-pic{
+  width: 40%;
+}
