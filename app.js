@@ -177,6 +177,26 @@ singincancle.addEventListener('click', function(event) {
 
 const db = firebase.database(); // Initialize database directly from the Firebase app instance
 
+
+
+// Retrieve the value of event1 from localStorage
+let event1 = singup;
+
+// Set event1 to 'accountcontainer' if it's not already set
+if (localStorage.getItem('event1') === 'accountcontainer') {
+  event1 = accountcontainer;
+} 
+
+dp.addEventListener('click', function(event) {
+  event1.style.display = 'flex';
+  // Update profile display elements
+});
+
+
+
+
+
+
 const singupbtn = document.getElementById('singupbtn');
 
 singupbtn.addEventListener('click', function(e){
@@ -207,16 +227,15 @@ singupbtn.addEventListener('click', function(e){
       // Update UI after successful signup
       singup.style.display='none';
       singin.style.display='none';
-      localStorage.setItem('flag', 'true');
+      localStorage.setItem('event1', 'accountcontainer');
+
       localStorage.setItem('storedUsername',username);
       // Update the profile image tag with the profile image URL
        localStorage.setItem('storedProfileImageURL',downloadURL) ;
       displaydate.innerHTML= formattedDate;
-      localStorage.setItem('displayname', displayname.innerHTML);
-      displayname.innerHTML=localStorage.getItem('storedUsername');
-      document.getElementById('profiledp').src = localStorage.getItem('storedProfileImageURL');
-    dp.src =localStorage.getItem('storedProfileImageURL');
       alertmsg(e,'Signed up successfully');
+      // Refresh the page
+location.reload();
     });
   }).catch((error) => {
     // Handle errors
@@ -225,24 +244,8 @@ singupbtn.addEventListener('click', function(e){
 });
 
 
-// Retrieve the value of event1 from localStorage
-let event1 = singup;
-
-// Set event1 to 'accountcontainer' if it's not already set
-if (localStorage.getItem('event1') === 'accountcontainer') {
-  event1 = accountcontainer;
-} 
-
-dp.addEventListener('click', function(event) {
-  event1.style.display = 'flex';
-  // Update profile display elements
-});
 
 
-
-
-// Flag to track if event1 has been set to accountcontainer
-let event1AlreadySet = false;
 
 // Event listener for signing in
 const singinbtn = document.getElementById('singinbtn');
@@ -299,6 +302,8 @@ const logoutButton = document.getElementById('logout');
 logoutButton.addEventListener('click', function() {
   // Remove all values from localStorage
   localStorage.clear();
+  // Refresh the page
+location.reload();
 });
 
 
