@@ -33,7 +33,7 @@ const storage = firebase.storage();
 // Reference to the folder where your images are stored
 const imageswal = storage.ref().child('TopWallpaper');
 const imagesdown = storage.ref().child('downloads');
-const wishlist = storage.ref().child('WISHLIST');
+const wishlist = storage.ref().child('wishlist/Ajay');
 let imagesRef;
   
 // Get the current URL
@@ -141,7 +141,6 @@ const back = document.getElementById('back');
 let displayname = document.getElementById('name');
 let displaydate = document.getElementById('date');
 const currentDate = new Date();
-
 // Options for formatting the date
 const options = { 
   month: 'long', // Display the full name of the month
@@ -153,7 +152,6 @@ const options = {
 const formattedDate = currentDate.toLocaleString('en-US', options);
 
 
-let event1 =singup;
 singinlink.addEventListener('click', function(event) {
   singup.style.display = 'none';
   singin.style.display = 'flex';
@@ -166,9 +164,6 @@ singuplink.addEventListener('click', function(event) {
 
 });
 
-dp.addEventListener('click', function(event) {
-  event1.style.display = 'flex';
-});
 back.addEventListener('click', function(event) {
   event1.style.display = 'none';
 });
@@ -212,15 +207,15 @@ singupbtn.addEventListener('click', function(e){
       // Update UI after successful signup
       singup.style.display='none';
       singin.style.display='none';
-      accountcontainer.style.display='flex';
-      event1=accountcontainer;
-      displayname.innerHTML= username;
-
-      // Update the image tag with the profile image URL
-      document.getElementById('profiledp').src = downloadURL;
-      dp.src=downloadURL;
-
+      localStorage.setItem('flag', 'true');
+      localStorage.setItem('storedUsername',username);
+      // Update the profile image tag with the profile image URL
+       localStorage.setItem('storedProfileImageURL',downloadURL) ;
       displaydate.innerHTML= formattedDate;
+      localStorage.setItem('displayname', displayname.innerHTML);
+      displayname.innerHTML=localStorage.getItem('storedUsername');
+      document.getElementById('profiledp').src = localStorage.getItem('storedProfileImageURL');
+    dp.src =localStorage.getItem('storedProfileImageURL');
       alertmsg(e,'Signed up successfully');
     });
   }).catch((error) => {
@@ -230,6 +225,24 @@ singupbtn.addEventListener('click', function(e){
 });
 
 
+// Retrieve the value of event1 from localStorage
+let event1 = singup;
+
+// Set event1 to 'accountcontainer' if it's not already set
+if (localStorage.getItem('event1') === 'accountcontainer') {
+  event1 = accountcontainer;
+} 
+
+dp.addEventListener('click', function(event) {
+  event1.style.display = 'flex';
+  // Update profile display elements
+});
+
+
+
+
+// Flag to track if event1 has been set to accountcontainer
+let event1AlreadySet = false;
 
 // Event listener for signing in
 const singinbtn = document.getElementById('singinbtn');
@@ -239,31 +252,84 @@ singinbtn.addEventListener('click', function(e){
   const username = document.getElementById('loginusername').value;
   const password = document.getElementById('loginpassword').value;
   
-// Retrieve user details from Firebase
-db.ref('user/' + username).once('value').then((snapshot) => {
-  const user = snapshot.val();
-  
-  if (user && user.password === password) {
-    // Sign in successful
-    singup.style.display='none';
-    singin.style.display='none';
-    accountcontainer.style.display='flex';
-    event1=accountcontainer;
-    displayname.innerHTML= username || 'Username retrieving failed';
-    displaydate.innerHTML= formattedDate;
-    // Update the profile image tag with the profile image URL
-    document.getElementById('profiledp').src = user.profileImageURL;
-    dp.src=user.profileImageURL;
-    alertmsg(e,'Signed in successfully');
-  } else {
-    // Incorrect username or password
-    alertmsg(e,'Incorrect username or password');
-  }
-}).catch((error) => {
-  alertmsg(e,'Error signing in');
+  // Retrieve user details from Firebase
+  db.ref('user/' + username).once('value').then((snapshot) => {
+    const user = snapshot.val();
+    
+    if (user && user.password === password) {
+      // Sign in successful
+      singup.style.display = 'none';
+      singin.style.display = 'none';
+      
+      // Update the value of event1 to 'accountcontainer' in localStorage
+      localStorage.setItem('event1', 'accountcontainer');
+    
+      
+      // Update localStorage with user details
+      localStorage.setItem('storedUsername', user.username);
+      localStorage.setItem('storedProfileImageURL', user.profileImageURL);
+      
+      alertmsg(e, 'Signed in successfully');
+      // Refresh the page
+location.reload();
+
+    } else {
+      // Incorrect username or password
+      alertmsg(e, 'Incorrect username or password');
+    }
+  }).catch((error) => {
+    alertmsg(e, 'Error signing in');
+  });
 });
 
+
+displayname.innerHTML = localStorage.getItem('storedUsername');
+document.getElementById('profiledp').src = localStorage.getItem('storedProfileImageURL');
+dp.src = localStorage.getItem('storedProfileImageURL') || './Images/Dp.jpg';
+
+
+
+
+
+
+// Get the logout button element
+const logoutButton = document.getElementById('logout');
+
+// Add click event listener to the logout button
+logoutButton.addEventListener('click', function() {
+  // Remove all values from localStorage
+  localStorage.clear();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const categories = document.getElementById('categories');
