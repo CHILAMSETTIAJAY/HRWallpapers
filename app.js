@@ -139,7 +139,7 @@ const singuplink = document.getElementById('singuplink');
 const accountcontainer = document.getElementById('accountcontainer');
 const back = document.getElementById('back');
 let displayname = document.getElementById('name');
-let displaydate = document.getElementById('date');
+const displaydate = document.getElementById('date');
 const currentDate = new Date();
 // Options for formatting the date
 const options = { 
@@ -222,7 +222,8 @@ singupbtn.addEventListener('click', function(e){
     return db.ref('user/' + username).set({
       username: username,
       password: password,
-      profileImageURL: downloadURL // Save the image URL to the database
+      profileImageURL: downloadURL, // Save the image URL to the database
+      joined:formattedDate
     }).then(() => {
       // Update UI after successful signup
       singup.style.display='none';
@@ -232,7 +233,8 @@ singupbtn.addEventListener('click', function(e){
       localStorage.setItem('storedUsername',username);
       // Update the profile image tag with the profile image URL
        localStorage.setItem('storedProfileImageURL',downloadURL) ;
-      displaydate.innerHTML= formattedDate;
+      localStorage.setItem('joineddate', formattedDate);
+
       alertmsg(e,'Signed up successfully');
       // Refresh the page
 location.reload();
@@ -271,6 +273,7 @@ singinbtn.addEventListener('click', function(e){
       // Update localStorage with user details
       localStorage.setItem('storedUsername', user.username);
       localStorage.setItem('storedProfileImageURL', user.profileImageURL);
+      localStorage.setItem('joineddate', user.joined);
       
       alertmsg(e, 'Signed in successfully');
       // Refresh the page
@@ -289,6 +292,7 @@ location.reload();
 displayname.innerHTML = localStorage.getItem('storedUsername');
 document.getElementById('profiledp').src = localStorage.getItem('storedProfileImageURL');
 dp.src = localStorage.getItem('storedProfileImageURL') || './Images/Dp.jpg';
+displaydate.innerHTML= localStorage.getItem('joineddate');
 
 
 
