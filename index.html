@@ -8,20 +8,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <section class="accountcontainer">
+  <section>
+    <div class="fullscreen-alert" id="fullscreenAlert">
+  <div class="alert-box">
+    <h2 id="alert-msg">Signed in successfully</h2>
+  </div>
+</div>
+  </section>
+  <section class="accountcontainer" id="accountcontainer">
     <div class="account">
       
       <div class="profilepic">
-        <img src="./Images/Dp.jpg" alt="">
+        <img src="./Images/Dp.jpg" alt="" id="profiledp">
       </div>
       <div class="info">
-        <p class="name">Ajay Chilamsetti</p>
-        <p class="date">Joined on April 2024</p>
+        <p class="name" id="name">Hr Wallpapers</p>
+        <p class="date">Joined on <span id="date">April 16, 2024</span></p>
       </div>
       <div class="menu">
-        <a href="index.html" class="menuitem">Back</a>
+        <p class="menuitem" id="back">Back</p>
         <a href="bookmarks.html" class="menuitem">Bookmarks</a>
-        <a href="#" class="menuitem">Logout</a>
+        <a href="index.html" class="menuitem">Logout</a>
       </div>
     </div>
   </section>
@@ -30,12 +37,14 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" id="singupcancle">
         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
       </svg>
-
       <input type="text" placeholder="username" id="username" class="input">
 
       <input type="password" placeholder="Password" id="password" class="input">
 
-      <input type="password" placeholder="ReenterPassword" id="reenterpassword" class="input">
+      <div class="dpuplode">
+        <input type="file" id="fileInput" accept="image/*" placeholder="Choose DP">
+        <p>Upload Profile Image in Square (1:1)</p>
+      </div>
 
       <button class="button" id="singupbtn">Singup</button>
       <p class="singintext">Already have account &nbsp; <a href="#" class="singinlink" id="singinlink">Singin</a> 
@@ -54,7 +63,7 @@
       <input type="password" placeholder="Password" id="loginpassword" class="input">
 
 
-      <button class="button">Singin</button>
+      <button class="button" id="singinbtn">Singin</button>
       <p class="singuptext">Don't have account &nbsp; <a href="#" class="singuptext" id="singuplink">Singup</a> 
   </form>
   </section>

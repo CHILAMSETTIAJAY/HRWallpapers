@@ -1,4 +1,19 @@
+// Function to reload the page
+function reloadPage(event) {
+  event.preventDefault(); // Prevent the default behavior (page reload)
+  // Add any custom logic here if needed
+}
+function alertmsg(e , msg){
+  e.preventDefault();
+  document.getElementById("fullscreenAlert").style.display = "flex";
+  document.getElementById("alert-msg").innerHTML=msg;
+  // Close the alert after 3 seconds (adjust the time as needed)
+  setTimeout(function() {
+    document.getElementById("fullscreenAlert").style.display = "none";
+  }, 2000);
+}
 // Your Firebase configuration
+
 const firebaseConfig = {
   apiKey: "AIzaSyAnyYghvHYwHY2Rbi5F1d6DuxVcnnAHEzI",
   authDomain: "hrwallpapers04.firebaseapp.com",
@@ -121,8 +136,24 @@ const singincancle = document.getElementById('singincancle');
 const singup = document.getElementById('singup');
 const singinlink = document.getElementById('singinlink');
 const singuplink = document.getElementById('singuplink');
+const accountcontainer = document.getElementById('accountcontainer');
+const back = document.getElementById('back');
+let displayname = document.getElementById('name');
+let displaydate = document.getElementById('date');
+const currentDate = new Date();
+
+// Options for formatting the date
+const options = { 
+  month: 'long', // Display the full name of the month
+  day: 'numeric', // Display the day of the month
+  year: 'numeric' // Display the year
+};
+
+// Format the date
+const formattedDate = currentDate.toLocaleString('en-US', options);
 
 
+let event1 =singup;
 singinlink.addEventListener('click', function(event) {
   singup.style.display = 'none';
   singin.style.display = 'flex';
@@ -136,7 +167,10 @@ singuplink.addEventListener('click', function(event) {
 });
 
 dp.addEventListener('click', function(event) {
-  singup.style.display = 'flex'; 
+  event1.style.display = 'flex';
+});
+back.addEventListener('click', function(event) {
+  event1.style.display = 'none';
 });
 
 singupcancle.addEventListener('click', function(event) {
@@ -152,15 +186,85 @@ const singupbtn = document.getElementById('singupbtn');
 
 singupbtn.addEventListener('click', function(e){
   e.preventDefault();
-  db.ref('user/' + document.getElementById('username').value).set({
-    username: document.getElementById('username').value,
-    password: document.getElementById('password').value
-  }).then(() => {
-    alert("signed up successfully");
+
+  // Get user input values
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const profileImage = document.getElementById('fileInput').files[0]; // Get the selected image file
+
+  // Create a storage reference for the image
+  const storageRef = firebase.storage().ref('profile_images/' + username + '_' + profileImage.name);
+
+  // Upload the image file to Firebase Storage
+  const uploadTask = storageRef.put(profileImage);
+
+  // Wait for the image upload to complete
+  uploadTask.then((snapshot) => {
+    // Get the download URL for the uploaded image
+    return snapshot.ref.getDownloadURL();
+  }).then((downloadURL) => {
+    // Save user information and image URL to the database
+    return db.ref('user/' + username).set({
+      username: username,
+      password: password,
+      profileImageURL: downloadURL // Save the image URL to the database
+    }).then(() => {
+      // Update UI after successful signup
+      singup.style.display='none';
+      singin.style.display='none';
+      accountcontainer.style.display='flex';
+      event1=accountcontainer;
+      displayname.innerHTML= username;
+
+      // Update the image tag with the profile image URL
+      document.getElementById('profiledp').src = downloadURL;
+      dp.src=downloadURL;
+
+      displaydate.innerHTML= formattedDate;
+      alertmsg(e,'Signed up successfully');
+    });
   }).catch((error) => {
-    console.error("Error signing up:", error);
+    // Handle errors
+    alertmsg(e,'Error signing up: ' + error.message);
   });
 });
+
+
+
+// Event listener for signing in
+const singinbtn = document.getElementById('singinbtn');
+singinbtn.addEventListener('click', function(e){
+  e.preventDefault();
+  
+  const username = document.getElementById('loginusername').value;
+  const password = document.getElementById('loginpassword').value;
+  
+// Retrieve user details from Firebase
+db.ref('user/' + username).once('value').then((snapshot) => {
+  const user = snapshot.val();
+  
+  if (user && user.password === password) {
+    // Sign in successful
+    singup.style.display='none';
+    singin.style.display='none';
+    accountcontainer.style.display='flex';
+    event1=accountcontainer;
+    displayname.innerHTML= username || 'Username retrieving failed';
+    displaydate.innerHTML= formattedDate;
+    // Update the profile image tag with the profile image URL
+    document.getElementById('profiledp').src = user.profileImageURL;
+    dp.src=user.profileImageURL;
+    alertmsg(e,'Signed in successfully');
+  } else {
+    // Incorrect username or password
+    alertmsg(e,'Incorrect username or password');
+  }
+}).catch((error) => {
+  alertmsg(e,'Error signing in');
+});
+
+});
+
 
 const categories = document.getElementById('categories');
 const home = document.getElementById('home');
@@ -172,3 +276,5 @@ categories.addEventListener('mouseover', function() {
 categories.addEventListener('mouseout', function() {
   home.style.borderBottom = ''; // Reset the border
 });
+
+
