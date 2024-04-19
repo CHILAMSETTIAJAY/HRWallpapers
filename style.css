@@ -55,11 +55,11 @@ a{
   font-size: 15px;
 }
 .profilepic img{
-  max-width: 100px;
-    max-height: 100px;
-    width: 100px;
+  width: 70px;
+  height: 70px;
     border-radius: 50px;
     object-fit: cover;
+    aspect-ratio: 1/1;
 }
 .menu{
   gap: 10px;
