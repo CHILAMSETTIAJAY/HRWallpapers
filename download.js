@@ -55,7 +55,7 @@ function fetchFile(url) {
       // Create a temporary link element
       const link = document.createElement('a');
       link.href = blobUrl;
-      link.download = 'image.jpg'; // Set the filename for download
+      link.download = 'HrWallpapers.jpg'; // Set the filename for download
       // Trigger click on the link
       link.click();
       // Cleanup
