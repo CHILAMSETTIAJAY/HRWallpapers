@@ -96,6 +96,9 @@ a {
     }
   }
   
+  #bookmarkremove{
+    display: none;
+  }
   /* Add this CSS to your existing CSS file */
 .message-container {
   width: 100%;

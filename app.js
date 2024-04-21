@@ -35,7 +35,7 @@ const imageswal = storage.ref().child('TopWallpaper');
 const imagesdown = storage.ref().child('downloads');
 const wishlist = storage.ref().child('wishlist/Ajay');
 let imagesRef;
-  
+localStorage.setItem('lastClickedValue', "on");
 // Get the current URL
 const currentUrl = window.location.href;
 if (currentUrl.includes('bookmarks.html')) {

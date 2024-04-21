@@ -68,6 +68,18 @@ function fetchFile(url) {
 
 // Get a reference to the bookmark icon
 const bookmarkIcon = document.getElementById('bookmarkpic');
+const bookmarkRemove = document.getElementById('bookmarkremove');
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Check if the fetchvalue is 'Bookmarks'
+  const fetchvalue = localStorage.getItem('lastClickedValue');
+  if (fetchvalue === 'Bookmarks') {
+    // Disable the bookmark functionality
+    const bookmarkIcon = document.getElementById('bookmarkpic');
+    bookmarkIcon.style.display = 'none'; // Hide the bookmark icon
+    bookmarkremove.style.display='flex'
+  }
+});
 
 const displayname = localStorage.getItem('storedUsername');
 if (displayname != null) {
@@ -110,7 +122,7 @@ bookmarkIcon.addEventListener('click', function(e) {
     .then(url => {
       // Image is already bookmarked
       document.getElementById('image-display').style.opacity = '0.4';
-      showMessage('already bookmarked');
+      showMessage('Already bookmarked');
     })
     .catch(error => {
       if (error.code === 'storage/object-not-found') {
@@ -126,18 +138,35 @@ bookmarkIcon.addEventListener('click', function(e) {
             return storageRef.put(blob);
           })
           .then(snapshot => {
-            console.log('Image uploaded successfully');
             // Display a "bookmarked" message
       document.getElementById('image-display').style.opacity = '0.4';
             showMessage('Bookmarked');
           })
           .catch(error => {
-            console.error('Error bookmarking image:', error);
             showMessage('Error bookmarking image. Please try again later.');
           });
       } else {
-        console.error('Error checking bookmark status:', error);
         showMessage('Error checking bookmark status. Please try again later.');
       }
+    });
+});
+
+
+bookmarkRemove.addEventListener('click', function() {
+  // Get the URL of the bookmarked image from localStorage
+  const imageURL = uplink;
+
+  // Delete the bookmarked image from Firebase Storage
+  const storageRef = firebase.storage().refFromURL(imageURL);
+  storageRef.delete()
+    .then(() => {
+      // Image successfully deleted
+      document.getElementById('image-display').style.opacity = '0.4';
+      showMessage('Removed from bookmarks');
+      window.location.href = 'catdisplay.html';
+    })
+    .catch((error) => {
+      // An error occurred while deleting the image
+      showMessage('Error deleting image. Please try again later.');
     });
 });
