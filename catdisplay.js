@@ -16,9 +16,17 @@ document.getElementById('featured-title').innerHTML=fetchvalue;
   
   // Reference to the storage service
   const storage = firebase.storage();
+  let imageswal;
+
+  if (fetchvalue === 'Bookmarks') {
+    // Reference to the folder where user's bookmarked images are stored
+    const username = localStorage.getItem('storedUsername');
+    imageswal = storage.ref().child(`wishlist/${username}`);
+  } else {
+    // Reference to the folder where your images are stored based on fetchvalue
+    imageswal = storage.ref().child(fetchvalue);
+  }
   
-      // Reference to the folder where your images are stored
-      const imageswal = storage.ref().child(fetchvalue);
   // Get download URLs for all images in the folder
 imageswal.listAll().then((result) => {
     result.items.forEach((imageRef) => {

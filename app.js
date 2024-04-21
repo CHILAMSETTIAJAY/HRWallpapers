@@ -99,7 +99,7 @@ anchorTags.forEach(function(anchorTag) {
     event.preventDefault();
     
     // Retrieve the inner HTML value of the clicked p tag
-    var innerHTMLValue = this.querySelector('.featured-text').textContent.trim();
+    var innerHTMLValue = this.querySelector('.fetch').textContent.trim();
     
     // Store the value in local storage
     localStorage.setItem('lastClickedValue', innerHTMLValue);
@@ -309,47 +309,3 @@ logoutButton.addEventListener('click', function() {
   // Refresh the page
 location.reload();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const categories = document.getElementById('categories');
-const home = document.getElementById('home');
-
-categories.addEventListener('mouseover', function() {
-  home.style.borderBottom = '3px solid rgba(255, 255, 255, 0)';
-});
-
-categories.addEventListener('mouseout', function() {
-  home.style.borderBottom = ''; // Reset the border
-});
-
-
