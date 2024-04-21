@@ -116,7 +116,6 @@ bookmarkIcon.addEventListener('click', function(e) {
       if (error.code === 'storage/object-not-found') {
         // Image is not bookmarked, proceed with bookmarking process
       document.getElementById('image-display').style.opacity = '0.4';
-        showMessage('Bookmarking...');
         // Fetch the image file
         fetch(imageURL)
           .then(response => response.blob())
@@ -127,17 +126,14 @@ bookmarkIcon.addEventListener('click', function(e) {
             return storageRef.put(blob);
           })
           .then(snapshot => {
-            console.log('Image uploaded successfully');
             // Display a "bookmarked" message
       document.getElementById('image-display').style.opacity = '0.4';
             showMessage('Bookmarked');
           })
           .catch(error => {
-            console.error('Error bookmarking image:', error);
             showMessage('Error bookmarking image. Please try again later.');
           });
       } else {
-        console.error('Error checking bookmark status:', error);
         showMessage('Error checking bookmark status. Please try again later.');
       }
     });
