@@ -55,7 +55,7 @@ function fetchFile(url) {
       // Create a temporary link element
       const link = document.createElement('a');
       link.href = blobUrl;
-      link.download = 'HrWallpapers.jpg'; // Set the filename for download
+      link.download = 'HrWallpapersimage.jpg'; // Set the filename for download
       // Trigger click on the link
       link.click();
       // Cleanup
@@ -126,14 +126,17 @@ bookmarkIcon.addEventListener('click', function(e) {
             return storageRef.put(blob);
           })
           .then(snapshot => {
+            console.log('Image uploaded successfully');
             // Display a "bookmarked" message
       document.getElementById('image-display').style.opacity = '0.4';
             showMessage('Bookmarked');
           })
           .catch(error => {
+            console.error('Error bookmarking image:', error);
             showMessage('Error bookmarking image. Please try again later.');
           });
       } else {
+        console.error('Error checking bookmark status:', error);
         showMessage('Error checking bookmark status. Please try again later.');
       }
     });
