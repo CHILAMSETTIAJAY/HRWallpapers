@@ -23,7 +23,7 @@ function showMessage(message) {
   }, 2000);
 }
 
- const uplink = localStorage.getItem('clickedImageUrl') ;
+ const uplink = localStorage.getItem('clickedImageUrl');
   
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -164,9 +164,10 @@ bookmarkRemove.addEventListener('click', function() {
       document.getElementById('image-display').style.opacity = '0.4';
       showMessage('Removed from bookmarks');
       window.location.href = 'catdisplay.html';
+      localStorage.setItem('clickedImageUrl','./Images/load2.gif');
     })
     .catch((error) => {
       // An error occurred while deleting the image
-      showMessage('Error deleting image. Please try again later.');
+      showMessage('Image already removed');
     });
 });

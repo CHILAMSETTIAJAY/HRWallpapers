@@ -33,6 +33,7 @@ imageswal.listAll().then((result) => {
       // Create a placeholder loading image
       const loadingImg = document.createElement('img');
       loadingImg.className = 'topimg';
+      loadingImg.alt = fetchvalue; 
       loadingImg.src = './Images/load2.gif'; // Set the loading image source
   
       // Append the loading image to the top container
