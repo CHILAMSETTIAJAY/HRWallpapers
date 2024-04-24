@@ -11,7 +11,7 @@
 body{
   width: 100vw;
   height: auto;
-  background-color: #131521;
+  background-color: #131521 !important;
   overflow-x: hidden !important;
 }
 a{
@@ -26,22 +26,17 @@ a{
   top: 0;
   left: 0;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   z-index: 10;
   display: none;
-  align-items: flex-end;
-  justify-content: center;
+  align-items: center;
+  justify-content: start;
 }
 .account{
-  height: auto;
-  width: 70%;
-  background-color: rgb(255, 255, 255);
-  padding: 20px 30px;
-  gap: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  min-height: 100%;
+  width: 60%;
+  background-color:#13152100;
+
 }
 .profilepic,.info , .menu{
   width: 100%;
@@ -80,6 +75,19 @@ a{
   display: none;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(5px); /* Add a blur effect to the background */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+}
+.loadersvg {
+  animation: rotate360 2s linear infinite; /* Adjust duration and timing function as needed */
+}
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 .dpuplode{
   display: flex;
@@ -88,7 +96,7 @@ a{
   flex-direction: column;
   gap: 3px;
   font-size: 0.8rem;
-  padding-top: 30px;
+  padding-top: 20px;
 }
 form{
   height: auto;
@@ -120,7 +128,6 @@ form h3{
   background-color: rgba(255, 255, 255, 0);
   border-radius: 3px;
   padding: 0 10px;
-  margin-top: 8px;
   font-size: 14px;
   font-weight: 300;
   border-bottom: 1px solid #131521;
@@ -143,16 +150,21 @@ form h3{
   position: fixed;
   right: 15px;
 }
-
 .nav-bar{
-  position:fixed;
-  bottom: 5vh;
   width: 100vw;
-  height: 1vh;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.user{
+  width: 90%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 5px;
+  padding: 30px 0px;
 }
 .nav{
   max-width: 550px;
@@ -160,9 +172,19 @@ form h3{
   height: 45px;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: space-around;
   color: #ffffff;
   position: relative;
+}
+.userinfo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+}
+.bi-cloud-download{
+  color: white;
 }
 input:focus {
   outline: none;
@@ -222,7 +244,7 @@ input:focus {
 #search-icon-2{
   display: none;
 }
-.header .container{
+.header .containerr{
   width: 100%;
   height: auto;
   display: flex;
@@ -276,7 +298,7 @@ font-weight: 300;
   padding: 15px 0px 12px 20px;
   border-bottom: none !important;
 }
-.container{
+.containerr{
   flex-direction: column;
 }
 .featured-container{
@@ -368,13 +390,121 @@ font-weight: 300;
   z-index: 9999; /* Ensure it's on top of everything */
 }
 
+.error{
+  font-size: 0.7rem;
+  color: red;
+  text-align: justify;
+  padding: 5px 0px;
+}
+
 .alert-box {
   width: 90vw;
-  height: 40vh;
+  height:auto;
+  padding: 20px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   font-size: 0.7rem;
+  border-radius: 0px 25px 0px 25px;
 }
+.search-container{
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchcon{
+  width: 90%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 50px;
+  padding: 0px 2px;
+}
+.searchbar{
+  width: 90%;
+  padding: 10px 8px;
+  border: none;
+}
+.sharingan{
+  width: 10%;
+  mix-blend-mode: inherit;
+  padding: 5px;
+position: relative;
+top: -2px;
+}
+.btns-search{
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 8px;
+  position: relative;
+  right: 8px;
+}
+
+#searchicon{
+  transform: rotate(45deg);
+}
+
+.sidebar {
+  position: fixed;
+  width: 60%;
+  height: 101vh;
+  background:#131521a3;
+  backdrop-filter: blur(50px);
+  font-size: 0.65em;
+}
+/* #312450 */
+
+.nav {
+  position: relative;
+  margin: 0 15%;
+  text-align: right;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+}
+
+.nav ul {
+  list-style: none;
+}
+.nav ul li {
+  position: relative;
+  margin: 3.2em 0;
+}
+.nav ul li a {
+  line-height: 5em;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.35);
+  display: block;
+  transition: all ease-out 300ms;
+}
+.nav ul li.active a {
+  color: white;
+}
+.nav ul li:not(.active)::after {
+  opacity: 0.2;
+}
+.nav ul li:not(.active):hover a {
+  color: rgba(255, 255, 255, 0.75);
+}
+.nav ul li::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0.2em;
+  background: black;
+  left: 0;
+  bottom: 0;
+  background-image: linear-gradient(to right, #5e42a6, #b74e91);
+}
+

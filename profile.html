@@ -3,55 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="profile.css">
-    <link rel="stylesheet" href="style.css">
+    <title>Facebook Profile</title>
+    <link rel="stylesheet" href="css.css">
 </head>
 <body>
-    <div class="profile-container">
-        <div class="profile-info">
-            <div class="profile-pic">
-                <img src="./Images/Dp.jpg" alt="" class="dppic" id="profiledp">
+    <p class="back" id="back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+        </svg>
+      </p>
+    <div class="user-details">
+        <div class="user-info">
+            <img src="./Images/Anime/0701004e0d6b96997e5a81e058f2b989 (1).jpg" alt="user-pic" class="user-pic" id="profiledp">
+            <div class="sub-user-details">
+                <div class="sub">
+                    <p class="user-name" id="name">Ajay Chilamsetti</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear-wide-connected" viewBox="0 0 16 16">
+                <path d="M7.068.727c.243-.97 1.62-.97 1.864 0l.071.286a.96.96 0 0 0 1.622.434l.205-.211c.695-.719 1.888-.03 1.613.931l-.08.284a.96.96 0 0 0 1.187 1.187l.283-.081c.96-.275 1.65.918.931 1.613l-.211.205a.96.96 0 0 0 .434 1.622l.286.071c.97.243.97 1.62 0 1.864l-.286.071a.96.96 0 0 0-.434 1.622l.211.205c.719.695.03 1.888-.931 1.613l-.284-.08a.96.96 0 0 0-1.187 1.187l.081.283c.275.96-.918 1.65-1.613.931l-.205-.211a.96.96 0 0 0-1.622.434l-.071.286c-.243.97-1.62.97-1.864 0l-.071-.286a.96.96 0 0 0-1.622-.434l-.205.211c-.695.719-1.888.03-1.613-.931l.08-.284a.96.96 0 0 0-1.186-1.187l-.284.081c-.96.275-1.65-.918-.931-1.613l.211-.205a.96.96 0 0 0-.434-1.622l-.286-.071c-.97-.243-.97-1.62 0-1.864l.286-.071a.96.96 0 0 0 .434-1.622l-.211-.205c-.719-.695-.03-1.888.931-1.613l.284.08a.96.96 0 0 0 1.187-1.186l-.081-.284c-.275-.96.918-1.65 1.613-.931l.205.211a.96.96 0 0 0 1.622-.434zM12.973 8.5H8.25l-2.834 3.779A4.998 4.998 0 0 0 12.973 8.5m0-1a4.998 4.998 0 0 0-7.557-3.779l2.834 3.78zM5.048 3.967l-.087.065zm-.431.355A4.98 4.98 0 0 0 3.002 8c0 1.455.622 2.765 1.615 3.678L7.375 8zm.344 7.646.087.065z"/>
+              </svg>
+                </div>
+                <a href="#" class="btn" id="logout">Logout</a>
             </div>
-            <div class="settings">
-                <div class="profile-setting">
-                    <p class="username" id="name">Ajay Chilamsetti</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear-fill" viewBox="0 0 16 16">
-                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-                    </svg>
-                </div>
-                <div class="edit">
-                    <a href="#" class="editbtn">Back</a>
-                    <a href="#" class="editbtn">Logout</a>
-                </div>
-           </div>
         </div>
     </div>
-    <div class="cat-info">
-        <a href="catdisplay.html" class="fetchtag">
-              <p class="fetch">
-                Wishlist
-              </p>
-          </a>
-          <a href="catdisplay.html" class="fetchtag">
-            <p class="fetch">
-              Downloads
-            </p>
-        </a>
-        <a href="catdisplay.html" class="fetchtag">
-            <p class="fetch">
-              Upload
-            </p>
-        </a>
-    </div>
-    <div class="top container">
-        <div class="top-container">
-        </div>
-      </div>
-      <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-      <script src="app.js"></script>
 </body>
 </html>

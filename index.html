@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="profile.css">
 </head>
-<body>
+<body id="body">
   <section>
     <div class="fullscreen-alert" id="fullscreenAlert">
   <div class="alert-box">
@@ -17,40 +17,53 @@
   </section>
   <section class="accountcontainer" id="accountcontainer">
     <div class="account">
-      
-      <div class="profilepic">
-        <img src="./Images/Dp.jpg" alt="" id="profiledp">
-      </div>
-      <div class="info">
-        <p class="name" id="name"></p>
-        <p class="date">Joined on <span id="date"></span></p>
-      </div>
-      <div class="menu">
-        <p class="menuitem" id="back">Back</p>
-        <a href="catdisplay.html" class="menuitem fetchtag">
-          <span class="fetch">Bookmarks</span></a>
-        <a href="index.html" class="menuitem" id="logout">Logout</a>
-      </div>
+      <p class="logout" id="logout">
+        <span class="logouttext">Logout</span>
+      </p>
+      <p class="back" id="back">
+        <span class="backtext">Back</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);transform: ;msFilter:;"><path d="M19.002 3h-14c-1.103 0-2 .897-2 2v4h2V5h14v14h-14v-4h-2v4c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V5c0-1.103-.898-2-2-2z"></path><path d="m11 16 5-4-5-4v3.001H3v2h8z"></path></svg>
+      </p>
+      <main class="main">
+        <aside class="sidebar">
+          <nav class="nav">
+            <ul>
+              <li class="active"><a href="about.html">About</a></li>
+              <li><a href="#" class="fetchtag">
+                <span class="fetch">Downloads</span></a></li>
+              <li><a href="#" class="fetchtag">
+                <span class="fetch">Bookmarks</span></a></li>
+              <li><a href="#" id="Contact">Contact us</a></li>
+            </ul>
+          </nav>
+        </aside>
+      </main>
     </div>
+
   </section>
   <section class="singup" id="singup">
     <form id="singupform">
       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" id="singupcancle">
         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
       </svg>
-      <input type="text" placeholder="username" id="username" class="input">
-
-      <input type="password" placeholder="Password" id="password" class="input">
-
+      <input type="text" placeholder="username" id="username" class="input" name="username" autocomplete="username">
+      <div id="usernameError" class="error"></div>
+  
+      <input type="password" placeholder="Password" id="password" class="input" name="password">
+      <div id="passwordError" class="error"></div>
+  
       <div class="dpuplode">
-        <input type="file" id="fileInput" accept="image/*" placeholder="Choose DP">
+        <input type="file" id="fileInput" accept="image/*" placeholder="Choose DP" name="profilepic">
+        <div id="fileInputError" class="error"></div>
         <p>Upload Profile Image in Square (1:1)</p>
       </div>
 
       <button class="button" id="singupbtn">Singup</button>
-      <p class="singintext">Already have account &nbsp; <a href="#" class="singinlink" id="singinlink">Singin</a> 
-  </form>
+      <div id="singupmsg" class="error"></div>
+      <p class="singintext">Already have account &nbsp; <a href="#" class="singinlink" id="singinlink">Singin</a></p>
+    </form>
   </section>
+  
 
   <section class="singin" id="singin">
     
@@ -59,31 +72,34 @@
         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
       </svg>
       
-      <input type="text" placeholder="username" id="loginusername" class="input">
+      <input type="text" placeholder="username" id="loginusername" class="input" name="username" autocomplete="username">
 
-      <input type="password" placeholder="Password" id="loginpassword" class="input">
+      <input type="password" placeholder="Password" id="loginpassword" class="input" name="password">
 
 
       <button class="button" id="singinbtn">Singin</button>
+      <div id="singinmsg" class="error"></div>
       <p class="singuptext">Don't have account &nbsp; <a href="#" class="singuptext" id="singuplink">Singup</a> 
   </form>
   </section>
   
   <div class="nav-bar">
-    <div class="nav">
-      <input type="text" class="search" id="search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" id="search-icon">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" id="search-icon-2">
-          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-        </svg>
+    <div class="user">
+      <div class="userinfo">
+      <img src="./Images/my4dp.png" alt="" class="dp" id="dp">
+      <p class="user-name" id="name">Animania</p>
+      </div>
     </div>
-    <img src="./Images/Dp.jpg" alt="" class="dp" id="dp">
   </div>
-  <div class="header">
-    <div class="profile">
-    <img src="./Images/HRwallapaperslogo.png" class="profile-pic" alt="">
+  <div class="search-container">
+    <div class="searchcon">
+      <img src="./Images/naruto.gif" alt="" class="sharingan">
+      <input type="text" class="searchbar" placeholder="searchbar" id="searchtext">
+      <div class="btns-search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" ><path d="M4 5h13v7h2V5c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h8v-2H4V5z"></path><path d="m8 11-3 4h11l-4-6-3 4z"></path><path d="M19 14h-2v3h-3v2h3v3h2v-3h3v-2h-3z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" ><path d="M16 12V6c0-2.217-1.785-4.021-3.979-4.021a.933.933 0 0 0-.209.025A4.006 4.006 0 0 0 8 6v6c0 2.206 1.794 4 4 4s4-1.794 4-4zm-6 0V6c0-1.103.897-2 2-2a.89.89 0 0 0 .163-.015C13.188 4.06 14 4.935 14 6v6c0 1.103-.897 2-2 2s-2-.897-2-2z"></path><path d="M6 12H4c0 4.072 3.061 7.436 7 7.931V22h2v-2.069c3.939-.495 7-3.858 7-7.931h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"  id="searchicon"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path><path d="M11.412 8.586c.379.38.588.882.588 1.414h2a3.977 3.977 0 0 0-1.174-2.828c-1.514-1.512-4.139-1.512-5.652 0l1.412 1.416c.76-.758 2.07-.756 2.826-.002z"></path></svg>
+      </div>
     </div>
   </div>
   <div class="featured container">
@@ -131,7 +147,7 @@
       </a>
     </div>
   </div>
-  <div class="top container">
+  <div class="top containerr">
     <p class="subhead featured-title ">Top Wallpapers</p>
     <div class="top-container">
     </div>

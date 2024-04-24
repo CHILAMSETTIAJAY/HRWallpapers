@@ -3,16 +3,6 @@ function reloadPage(event) {
   event.preventDefault(); // Prevent the default behavior (page reload)
   // Add any custom logic here if needed
 }
-function alertmsg(e , msg){
-  e.preventDefault();
-  document.getElementById("fullscreenAlert").style.display = "flex";
-  document.getElementById("alert-msg").innerHTML=msg;
-  // Close the alert after 3 seconds (adjust the time as needed)
-  setTimeout(function() {
-    document.getElementById("fullscreenAlert").style.display = "none";
-  }, 2000);
-}
-// Your Firebase configuration
 
 const firebaseConfig = {
   apiKey: "AIzaSyAnyYghvHYwHY2Rbi5F1d6DuxVcnnAHEzI",
@@ -30,7 +20,21 @@ const app = firebase.initializeApp(firebaseConfig);
 // Reference to the storage service
 const storage = firebase.storage();
 
-// Reference to the folder where your images are stored
+const searchtext = document.getElementById('searchtext');
+searchtext.addEventListener('keypress', function(event) {
+  // Check if the Enter key was pressed (key code 13)
+  if (event.key === 'Enter') {
+    const searchTextValue = searchtext.value;
+    localStorage.setItem('searchtext', searchTextValue); // Saving the search text in local storage
+
+    if (searchTextValue.trim() !== '') {
+      window.location.href = `search.html?search=${encodeURIComponent(searchTextValue)}`;
+    }
+  }
+});
+
+
+
 const imageswal = storage.ref().child('TopWallpaper');
 const imagesdown = storage.ref().child('downloads');
 const wishlist = storage.ref().child('wishlist/Ajay');
@@ -104,32 +108,12 @@ anchorTags.forEach(function(anchorTag) {
     
     // Store the value in local storage
     localStorage.setItem('lastClickedValue', innerHTMLValue);
-    window.location.href = 'catdisplay.html';
+    window.location.href = "catdisplay.html";
   });
 });
 
 
-const searchbtn = document.getElementById('search-icon');
-const searchbtn2= document.getElementById('search-icon-2');
-const search = document.getElementById('search');
-let isSearchVisible = false;
 
-searchbtn.addEventListener('click', function(event) {
-  search.style.display = 'block'; 
-  searchbtn.style.display='none';
-  searchbtn2.style.display='block';
-  searchbtn2.style.borderRadius = '0px 50px 50px 0px';
-  searchbtn2.style.transition = 'border-radius 0.3s ease';
-  searchbtn2.style.padding='6px 10px';
-  searchbtn2.style.width='30px';
-});
-
-
-searchbtn2.addEventListener('click', function(event) {
-  search.style.display = 'none'; 
-  searchbtn2.style.display='none';
-  searchbtn.style.display='block';
-});
 
 const dp = document.getElementById('dp');
 const singupcancle = document.getElementById('singupcancle');
@@ -140,6 +124,7 @@ const singuplink = document.getElementById('singuplink');
 const accountcontainer = document.getElementById('accountcontainer');
 const back = document.getElementById('back');
 let displayname = document.getElementById('name');
+let homename = document.getElementById('homename');
 const displaydate = document.getElementById('date');
 const currentDate = new Date();
 // Options for formatting the date
@@ -182,7 +167,6 @@ const db = firebase.database(); // Initialize database directly from the Firebas
 
 // Retrieve the value of event1 from localStorage
 let event1 = singup;
-
 // Set event1 to 'accountcontainer' if it's not already set
 if (localStorage.getItem('event1') === 'accountcontainer') {
   event1 = accountcontainer;
@@ -196,7 +180,65 @@ dp.addEventListener('click', function(event) {
 
 
 
+function displayError(fieldId, errorMessage) {
+  var errorDiv = document.getElementById(fieldId);
+  errorDiv.textContent = errorMessage;
+  errorDiv.style.display = 'block';
+  setTimeout(function() {
+    if(errorDiv != null){
+      errorDiv.style.display.style.display = "none";
+    }
+  }, 3000);
+}
 
+// Function to clear error message for a specific field
+function clearError(fieldId) {
+  var errorDiv = document.getElementById(fieldId);
+  errorDiv.textContent = '';
+  errorDiv.style.display = 'none';
+}
+
+// Function to clear all error messages
+function clearErrors() {
+  var errorDivs = document.querySelectorAll('.error');
+  errorDivs.forEach(function(errorDiv) {
+    errorDiv.textContent = '';
+    errorDiv.style.display = 'none';
+  });
+}
+
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password');
+
+usernameInput.addEventListener('input', function() {
+  const username = usernameInput.value;
+  if (username.length >= 4) {
+    clearError('usernameError');
+  }
+});
+
+// Event listener for password input
+passwordInput.addEventListener('input', function() {
+  const password = passwordInput.value;
+  if (password.length >= 8 && password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)) {
+    clearError('passwordError');
+  }
+});
+
+// Function to check if username already exists in storage
+async function checkUsernameExists(username) {
+  const snapshot = await db.ref('user/' + username).once('value');
+  return snapshot.exists();
+}
+
+function changeToSVG(btn) {
+  btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" class="loadersvg"  style="fill: rgb(255, 255, 255);transform: ;msFilter:;"><circle cx="12" cy="20" r="2"></circle><circle cx="12" cy="4" r="2"></circle><circle cx="6.343" cy="17.657" r="2"></circle><circle cx="17.657" cy="6.343" r="2"></circle><circle cx="4" cy="12" r="2.001"></circle><circle cx="20" cy="12" r="2"></circle><circle cx="6.343" cy="6.344" r="2"></circle><circle cx="17.657" cy="17.658" r="2"></circle></svg>'; // Replace '...' with your SVG content
+}
+
+// Function to revert the button's innerHTML back to the original text
+function revertToText( btn , value) {
+  btn.innerHTML = value;
+}
 
 const singupbtn = document.getElementById('singupbtn');
 
@@ -208,12 +250,43 @@ singupbtn.addEventListener('click', function(e){
   const password = document.getElementById('password').value;
   const profileImage = document.getElementById('fileInput').files[0]; // Get the selected image file
 
+  if (username.length < 4) {
+    displayError('usernameError', 'Username must be at least 4 characters long.');
+    return;
+  }
+  checkUsernameExists(username).then((exists) => {
+    if (exists) {
+      displayError('usernameError', 'Username already in use. Please choose a different one.');
+      return;
+    }
+  });
+  if (profileImage == null) {
+    displayError('fileInputError', 'Upload Image for profilr pic');
+    return;
+  }
+  if (password.length < 8 || !password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)) {
+    displayError('passwordError', 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.');
+    return;
+  }
+
+  if (!/^\S*(?=\S{2})\S*$/.test(username)) {
+    displayError('usernameError', 'Username cannot contain consecutive spaces.');
+    return;
+  }
+  if (!/^\S*(?=\S{2})\S*$/.test(password)) {
+    displayError('passwordError', 'Username cannot contain consecutive spaces.');
+    return;
+  }
+
   // Create a storage reference for the image
-  const storageRef = firebase.storage().ref('profile_images/' + username + '_' + profileImage.name);
+  const storageRef = firebase.storage().ref('profile_images/' + username + '_' + profileImage);
 
   // Upload the image file to Firebase Storage
   const uploadTask = storageRef.put(profileImage);
+  const orginaltetx= singupbtn.innerHTML;
+  displayError('singupmsg', 'Signigup please wait.....');
 
+  changeToSVG(singupbtn);
   // Wait for the image upload to complete
   uploadTask.then((snapshot) => {
     // Get the download URL for the uploaded image
@@ -235,14 +308,14 @@ singupbtn.addEventListener('click', function(e){
       // Update the profile image tag with the profile image URL
        localStorage.setItem('storedProfileImageURL',downloadURL) ;
       localStorage.setItem('joineddate', formattedDate);
+    displayError('singupmsg', 'Signed up successfully.');
 
-      alertmsg(e,'Signed up successfully');
-      // Refresh the page
 location.reload();
     });
   }).catch((error) => {
     // Handle errors
-    alertmsg(e,'Error signing up: ' + error.message);
+    revertToText(singupbtn,orginaltetx);
+    displayError('singupmsg', 'Error signing up.');
   });
 });
 
@@ -257,7 +330,10 @@ singinbtn.addEventListener('click', function(e){
   
   const username = document.getElementById('loginusername').value;
   const password = document.getElementById('loginpassword').value;
-  
+  const orginaltetx= singinbtn.innerHTML;
+
+  changeToSVG(singinbtn);  
+  displayError('singinmsg', 'Signingin please wait.....');
   // Retrieve user details from Firebase
   db.ref('user/' + username).once('value').then((snapshot) => {
     const user = snapshot.val();
@@ -269,42 +345,31 @@ singinbtn.addEventListener('click', function(e){
       
       // Update the value of event1 to 'accountcontainer' in localStorage
       localStorage.setItem('event1', 'accountcontainer');
-    
-      
       // Update localStorage with user details
       localStorage.setItem('storedUsername', user.username);
       localStorage.setItem('storedProfileImageURL', user.profileImageURL);
       localStorage.setItem('joineddate', user.joined);
+    displayError('singinmsg', 'Signed in successfully.');
       
-      alertmsg(e, 'Signed in successfully');
-      // Refresh the page
 location.reload();
 
     } else {
       // Incorrect username or password
-      alertmsg(e, 'Incorrect username or password');
+      revertToText(singinbtn,orginaltetx);
+      displayError('singinmsg', 'Incorrect username or password.');
+
     }
   }).catch((error) => {
-    alertmsg(e, 'Error signing in');
+    displayError('singinpmsg', 'Error signing in.');
   });
 });
 
-
-displayname.innerHTML = localStorage.getItem('storedUsername');
-document.getElementById('profiledp').src = localStorage.getItem('storedProfileImageURL');
-dp.src = localStorage.getItem('storedProfileImageURL') || './Images/Dp.jpg';
-displaydate.innerHTML= localStorage.getItem('joineddate');
-
-
-
-
-
-
 // Get the logout button element
 const logoutButton = document.getElementById('logout');
-
+logoutButton.innerHTML='Logout';
 // Add click event listener to the logout button
 logoutButton.addEventListener('click', function() {
+  logoutButton.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" class="loadersvg"  style="fill: rgb(255, 255, 255);transform: ;msFilter:;"><circle cx="12" cy="20" r="2"></circle><circle cx="12" cy="4" r="2"></circle><circle cx="6.343" cy="17.657" r="2"></circle><circle cx="17.657" cy="6.343" r="2"></circle><circle cx="4" cy="12" r="2.001"></circle><circle cx="20" cy="12" r="2"></circle><circle cx="6.343" cy="6.344" r="2"></circle><circle cx="17.657" cy="17.658" r="2"></circle></svg>';
   // Remove all values from localStorage
   localStorage.clear();
   // Refresh the page
@@ -312,5 +377,22 @@ location.reload();
 });
 
 
+
+displayname.innerHTML = localStorage.getItem('storedUsername') || 'Animania';
+dp.src = localStorage.getItem('storedProfileImageURL') || './Images/my4dp.png';
+
+document.getElementById('Contact').addEventListener('click', function(event) {
+  event.preventDefault();
+
+  // Define the email address and subject
+  const emailAddress = 'animania@example.com';
+  const subject = 'Inquiry';
+
+  // Construct the mailto URL
+  const mailtoUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}`;
+
+  // Open the user's default email client
+  window.location.href = mailtoUrl;
+});
 
 

@@ -13,6 +13,7 @@ function showMessage(message) {
   messageElement.style.padding = '10px';
   messageElement.style.borderRadius = '10px';
   messageElement.style.zIndex = '9999';
+  
 
   // Append the message element to the body
   document.body.appendChild(messageElement);
@@ -21,6 +22,14 @@ function showMessage(message) {
   setTimeout(() => {
     document.body.removeChild(messageElement);
   }, 2000);
+}
+
+const displayname = localStorage.getItem('storedUsername');
+const bookmarkIcon = document.getElementById('bookmarkpic');
+const bookmarkRemove = document.getElementById('bookmarkremove');
+
+if (displayname != null) {
+  bookmarkIcon.style.display = 'flex';
 }
 
  const uplink = localStorage.getItem('clickedImageUrl');
@@ -48,7 +57,7 @@ downloadLink.addEventListener('click', e => {
 
 function fetchFile(url) {
   fetch(url)
-    .then(res => res.blob()) // fixed: res.blob() instead of blob()
+    .then(res => res.blob())
     .then(blob => {
       // Create a URL for the blob
       const blobUrl = URL.createObjectURL(blob);
@@ -60,15 +69,38 @@ function fetchFile(url) {
       link.click();
       // Cleanup
       URL.revokeObjectURL(blobUrl);
-      document.getElementById('image-display').style.opacity = '0.4';
-      showMessage('Downloded');
+    document.getElementById('image-display').style.opacity = '0.4';
+      showMessage('Downloaded');
+
+      if (displayname != null) {
+        uploadToFirebaseStorage(blob,url);
+      }
+      // Upload to Firebase Storage
+      
     })
     .catch(error => console.error('Error fetching file:', error));
 }
 
+function uploadToFirebaseStorage(blob,url) {
+  // Get a reference to the Firebase Storage service
+  const storage = firebase.storage();
+  // Create a storage reference from our storage service
+  const storageRef = storage.ref();
+  const imageURL = localStorage.getItem('clickedImageUrl');
+
+  // Create a reference to the file you want to upload
+  const uploadRef = storageRef.child(`downloads/${displayname}/`+imageURL.substring(imageURL.lastIndexOf('/') + 1));
+
+  // Upload the file to Firebase Storage
+  uploadRef.put(blob).then(snapshot => {
+    document.getElementById('image-display').style.opacity = '0.4';
+  }).catch(error => {
+    console.error('Error uploading file:', error);
+  });
+}
+
 // Get a reference to the bookmark icon
-const bookmarkIcon = document.getElementById('bookmarkpic');
-const bookmarkRemove = document.getElementById('bookmarkremove');
+
 
 document.addEventListener('DOMContentLoaded', function () {
   // Check if the fetchvalue is 'Bookmarks'
@@ -80,12 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
     bookmarkremove.style.display='flex'
   }
 });
-
-const displayname = localStorage.getItem('storedUsername');
-if (displayname != null) {
-  bookmarkIcon.style.display = 'flex';
-}
-
 
 
 const firebaseConfig = {

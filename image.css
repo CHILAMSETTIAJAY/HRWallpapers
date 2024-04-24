@@ -62,6 +62,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  font-weight: 500;
 }
 
 .btn2{
@@ -132,5 +133,5 @@ a {
   font-size: 0.9rem;
 }
 .profile-pic{
-  width: 40%;
+  width: 50%;
 }
