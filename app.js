@@ -20,18 +20,7 @@ const app = firebase.initializeApp(firebaseConfig);
 // Reference to the storage service
 const storage = firebase.storage();
 
-const searchtext = document.getElementById('searchtext');
-searchtext.addEventListener('keypress', function(event) {
-  // Check if the Enter key was pressed (key code 13)
-  if (event.key === 'Enter') {
-    const searchTextValue = searchtext.value;
-    localStorage.setItem('searchtext', searchTextValue); // Saving the search text in local storage
 
-    if (searchTextValue.trim() !== '') {
-      window.location.href = `search.html?search=${encodeURIComponent(searchTextValue)}`;
-    }
-  }
-});
 
 
 
@@ -395,4 +384,16 @@ document.getElementById('Contact').addEventListener('click', function(event) {
   window.location.href = mailtoUrl;
 });
 
+const searchtext = document.getElementById('searchtext');
 
+searchtext.addEventListener('keypress', function(event) {
+  // Check if the Enter key was pressed (key code 13)
+  if (event.key === 'Enter') {
+    const searchTextValue = searchtext.value;
+    localStorage.setItem('searchtext', searchTextValue); // Saving the search text in local storage
+
+    if (searchTextValue.trim() !== '') {
+      window.location.href = `search.html?search=${encodeURIComponent(searchTextValue)}`;
+    }
+  }
+});
